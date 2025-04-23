@@ -17,12 +17,20 @@ namespace Gallery_Api.Controllers
     public class PhotoApisController : ControllerBase
     {
 
+		private readonly string rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+		
         [HttpPost] 
         public ActionResult UploadFile(IFormFile file)
         {
             return Ok(new UploadHandler().Upload(file));
         }
 
+        [HttpGet]
+        public ActionResult GetImages()
+        {
+            List<string> Images = Directory.GetFiles(rootPath).Select(Path.GetFileName).ToList(); 
+            return Ok(Images);
+        }
 
     }
 }
